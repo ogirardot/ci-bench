@@ -1,0 +1,14 @@
+# rust build artifacts
+workloads/rust-build/target/
+
+# local benchmark run output (collected results/ is COMMITTED-free but kept
+# out of git too — it is machine-local analysis state)
+/results.jsonl
+results/
+
+# probe scratch output (written to TMPDIR, guarded just in case)
+probe.bin
+*.probe.bin
+
+# macOS noise
+.DS_Store

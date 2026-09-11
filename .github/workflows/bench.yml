@@ -1,0 +1,88 @@
+name: bench
+
+# THE GITHUB side of the CI race. Runs on github.com only: rickub reads
+# .rickub/workflows/ as its sole workflow source when that directory exists
+# and ignores .github/workflows/ entirely (rickub web/ci_dispatch.go
+# walkWorkflows), so the two files never double-fire. Keep the STEP ORDER
+# identical to .rickub/workflows/bench.yml — that is the point of the
+# benchmark.
+#
+# Deliberately NO `concurrency:` block: queue depth is part of what we
+# measure, and cancel-in-progress would destroy rounds.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  BENCH_PLATFORM: github
+
+jobs:
+  bench:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      # Pin comment policy mirrors rickub's own ci.yml: SHA-pinned actions.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: mark job-start
+        run: |
+          rid="${GITHUB_RUN_ID:-0}-${GITHUB_RUN_ATTEMPT:-1}-$(git rev-parse --short HEAD)"
+          echo "BENCH_RUN_ID=$rid" >> "$GITHUB_ENV"
+          source "${GITHUB_WORKSPACE:-$PWD}/scripts/emit_timing.sh"
+          BENCH_RUN_ID="$rid" bench_mark job-start
+
+      # COLD build: hosted runners start empty, so this run of cargo fetches
+      # every crate and compiles the full tree. `rm -rf target` is belt and
+      # braces (it should never exist here). No actions/cache on purpose.
+      - name: rust cold build
+        run: |
+          set -euo pipefail
+          source "${GITHUB_WORKSPACE:-$PWD}/scripts/emit_timing.sh"
+          bench_step rust-cold-build bash -ec \
+            'rm -rf workloads/rust-build/target && cargo build --manifest-path workloads/rust-build/Cargo.toml'
+
+      # WARM build: same job, target/ populated — measures the incremental
+      # no-op rebuild path (link + freshness checks only).
+      - name: rust warm build
+        run: |
+          set -euo pipefail
+          source "${GITHUB_WORKSPACE:-$PWD}/scripts/emit_timing.sh"
+          bench_step rust-warm-build cargo build --manifest-path workloads/rust-build/Cargo.toml
+
+      - name: rust test
+        run: |
+          set -euo pipefail
+          source "${GITHUB_WORKSPACE:-$PWD}/scripts/emit_timing.sh"
+          bench_step rust-test cargo test --manifest-path workloads/rust-build/Cargo.toml
+
+      # docker-build: skipped (recorded, not failed) when docker is absent.
+      - name: docker build
+        run: |
+          set -euo pipefail
+          source "${GITHUB_WORKSPACE:-$PWD}/scripts/emit_timing.sh"
+          if command -v docker >/dev/null 2>&1; then
+            bench_step docker-build bash -ec \
+              'docker build -t ci-bench:docker workloads/docker-build && docker run --rm ci-bench:docker'
+          else
+            bench_skip docker-build "docker not available on runner"
+          fi
+
+      - name: probe runner
+        run: bash workloads/probe/probe.sh
+
+      - name: show results
+        run: cat "${GITHUB_WORKSPACE:-$PWD}/results.jsonl"
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: bench-results
+          path: results.jsonl

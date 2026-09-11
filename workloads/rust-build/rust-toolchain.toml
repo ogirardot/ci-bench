@@ -1,0 +1,5 @@
+# Pin the toolchain: identical rustc on every platform is part of the pinned
+# workload. 1.85.0 is the minimum for clap_builder 4.6.x (edition 2024).
+[toolchain]
+channel = "1.85.0"
+profile = "minimal"
