@@ -197,3 +197,21 @@ probe degrades gracefully). Collect with
 | GNU date      | python3 millis fallback, then whole-second `.000Z`   |
 | dd / stat / df| probe records `null` values, job stays green         |
 | python3       | emitter falls back to whole-second timestamps        |
+
+## Real-world tier (added round 12+)
+
+Alongside the synthetic micro-workloads, the bench builds four notorious OSS
+projects at pinned tags, cloned/downloaded inside the timed window:
+
+| step | project | pin | toolchain |
+|---|---|---|---|
+| `rust-ripgrep` | BurntSushi/ripgrep | 15.2.0 | cargo |
+| `cpp-sqlite` | SQLite amalgamation | 3.45.1 (sqlite.org 2024 tarball) | gcc/make |
+| `node-typescript` | microsoft/TypeScript | v5.9.3 (5.x line — 7.x is the Go rewrite) | node/npm |
+| `java-guava` | google/guava | v33.7.1 | maven |
+
+ClickHouse is deliberately absent: a full build needs dozens of cores and
+~100 GB of disk, which no shared-runner tier (ours or GitHub's) provides — a
+ClickHouse-scale tier needs a dedicated runner class, not a benchmark step.
+SQLite's amalgamation is the C/C++ stand-in: a real configure+make of one of
+the most deployed codebases on earth, reproducible from a pinned tarball.
