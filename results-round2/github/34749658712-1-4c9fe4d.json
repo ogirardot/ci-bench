@@ -1,0 +1,138 @@
+[
+ {
+  "step": "job-start",
+  "platform": "github",
+  "run_id": "34749658712-1-4c9fe4d",
+  "start": "2026-09-13T09:33:51.261Z",
+  "end": "2026-09-13T09:33:51.261Z",
+  "status": "ok",
+  "duration_ms": 0
+ },
+ {
+  "step": "rust-cold-build",
+  "platform": "github",
+  "run_id": "34749658712-1-4c9fe4d",
+  "start": "2026-09-13T09:33:51.345Z",
+  "end": "2026-09-13T09:34:04.360Z",
+  "status": "ok",
+  "duration_ms": 13015
+ },
+ {
+  "step": "rust-warm-build",
+  "platform": "github",
+  "run_id": "34749658712-1-4c9fe4d",
+  "start": "2026-09-13T09:34:04.436Z",
+  "end": "2026-09-13T09:34:04.481Z",
+  "status": "ok",
+  "duration_ms": 45
+ },
+ {
+  "step": "rust-test",
+  "platform": "github",
+  "run_id": "34749658712-1-4c9fe4d",
+  "start": "2026-09-13T09:34:04.559Z",
+  "end": "2026-09-13T09:34:06.733Z",
+  "status": "ok",
+  "duration_ms": 2174
+ },
+ {
+  "step": "docker-build",
+  "platform": "github",
+  "run_id": "34749658712-1-4c9fe4d",
+  "start": "2026-09-13T09:34:06.808Z",
+  "end": "2026-09-13T09:34:12.420Z",
+  "status": "ok",
+  "duration_ms": 5612
+ },
+ {
+  "step": "rust-ripgrep",
+  "platform": "github",
+  "run_id": "34749658712-1-4c9fe4d",
+  "start": "2026-09-13T09:34:12.497Z",
+  "end": "2026-09-13T09:34:41.183Z",
+  "status": "ok",
+  "duration_ms": 28686
+ },
+ {
+  "step": "cpp-sqlite",
+  "platform": "github",
+  "run_id": "34749658712-1-4c9fe4d",
+  "start": "2026-09-13T09:34:41.260Z",
+  "end": "2026-09-13T09:35:58.223Z",
+  "status": "ok",
+  "duration_ms": 76963
+ },
+ {
+  "step": "node-typescript",
+  "platform": "github",
+  "run_id": "34749658712-1-4c9fe4d",
+  "start": "2026-09-13T09:35:58.299Z",
+  "end": "2026-09-13T09:36:45.290Z",
+  "status": "ok",
+  "duration_ms": 46991
+ },
+ {
+  "step": "java-guava",
+  "platform": "github",
+  "run_id": "34749658712-1-4c9fe4d",
+  "start": "2026-09-13T09:36:45.366Z",
+  "end": "2026-09-13T09:37:29.102Z",
+  "status": "ok",
+  "duration_ms": 43736
+ },
+ {
+  "step": "probe-cpu",
+  "platform": "github",
+  "run_id": "34749658712-1-4c9fe4d",
+  "start": "2026-09-13T09:37:33.728Z",
+  "end": "2026-09-13T09:37:33.728Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": 221.92,
+  "unit": "kops_per_s"
+ },
+ {
+  "step": "probe-write",
+  "platform": "github",
+  "run_id": "34749658712-1-4c9fe4d",
+  "start": "2026-09-13T09:37:35.094Z",
+  "end": "2026-09-13T09:37:35.094Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": 1660.0,
+  "unit": "MB_per_s"
+ },
+ {
+  "step": "probe-read",
+  "platform": "github",
+  "run_id": "34749658712-1-4c9fe4d",
+  "start": "2026-09-13T09:37:40.789Z",
+  "end": "2026-09-13T09:37:40.789Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": 18578.0,
+  "unit": "MB_per_s"
+ },
+ {
+  "step": "probe-fs-type",
+  "platform": "github",
+  "run_id": "34749658712-1-4c9fe4d",
+  "start": "2026-09-13T09:37:40.947Z",
+  "end": "2026-09-13T09:37:40.947Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": "ext2/ext3",
+  "unit": "fstype"
+ },
+ {
+  "step": "probe-fs-free",
+  "platform": "github",
+  "run_id": "34749658712-1-4c9fe4d",
+  "start": "2026-09-13T09:37:41.016Z",
+  "end": "2026-09-13T09:37:41.016Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": 85521,
+  "unit": "MB"
+ }
+]

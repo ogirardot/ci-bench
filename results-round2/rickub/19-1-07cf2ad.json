@@ -1,0 +1,138 @@
+[
+ {
+  "step": "job-start",
+  "platform": "rickub",
+  "run_id": "19-1-07cf2ad",
+  "start": "2026-09-13T09:49:46.181Z",
+  "end": "2026-09-13T09:49:46.181Z",
+  "status": "ok",
+  "duration_ms": 0
+ },
+ {
+  "step": "rust-cold-build",
+  "platform": "rickub",
+  "run_id": "19-1-07cf2ad",
+  "start": "2026-09-13T09:49:46.227Z",
+  "end": "2026-09-13T09:49:52.416Z",
+  "status": "ok",
+  "duration_ms": 6189
+ },
+ {
+  "step": "rust-warm-build",
+  "platform": "rickub",
+  "run_id": "19-1-07cf2ad",
+  "start": "2026-09-13T09:49:52.438Z",
+  "end": "2026-09-13T09:49:52.458Z",
+  "status": "ok",
+  "duration_ms": 20
+ },
+ {
+  "step": "rust-test",
+  "platform": "rickub",
+  "run_id": "19-1-07cf2ad",
+  "start": "2026-09-13T09:49:52.481Z",
+  "end": "2026-09-13T09:49:52.834Z",
+  "status": "ok",
+  "duration_ms": 353
+ },
+ {
+  "step": "docker-build",
+  "platform": "rickub",
+  "run_id": "19-1-07cf2ad",
+  "start": "2026-09-13T09:49:52.857Z",
+  "end": "2026-09-13T09:49:55.909Z",
+  "status": "ok",
+  "duration_ms": 3052
+ },
+ {
+  "step": "rust-ripgrep",
+  "platform": "rickub",
+  "run_id": "19-1-07cf2ad",
+  "start": "2026-09-13T09:49:55.949Z",
+  "end": "2026-09-13T09:50:09.008Z",
+  "status": "ok",
+  "duration_ms": 13059
+ },
+ {
+  "step": "cpp-sqlite",
+  "platform": "rickub",
+  "run_id": "19-1-07cf2ad",
+  "start": "2026-09-13T09:50:09.032Z",
+  "end": "2026-09-13T09:50:51.219Z",
+  "status": "ok",
+  "duration_ms": 42187
+ },
+ {
+  "step": "node-typescript",
+  "platform": "rickub",
+  "run_id": "19-1-07cf2ad",
+  "start": "2026-09-13T09:50:51.250Z",
+  "end": "2026-09-13T09:51:12.854Z",
+  "status": "ok",
+  "duration_ms": 21604
+ },
+ {
+  "step": "java-guava",
+  "platform": "rickub",
+  "run_id": "19-1-07cf2ad",
+  "start": "2026-09-13T09:51:12.887Z",
+  "end": "2026-09-13T09:51:53.155Z",
+  "status": "ok",
+  "duration_ms": 40268
+ },
+ {
+  "step": "probe-cpu",
+  "platform": "rickub",
+  "run_id": "19-1-07cf2ad",
+  "start": "2026-09-13T09:51:54.860Z",
+  "end": "2026-09-13T09:51:54.860Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": 600.17,
+  "unit": "kops_per_s"
+ },
+ {
+  "step": "probe-write",
+  "platform": "rickub",
+  "run_id": "19-1-07cf2ad",
+  "start": "2026-09-13T09:51:55.738Z",
+  "end": "2026-09-13T09:51:55.738Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": 2545.6,
+  "unit": "MB_per_s"
+ },
+ {
+  "step": "probe-read",
+  "platform": "rickub",
+  "run_id": "19-1-07cf2ad",
+  "start": "2026-09-13T09:51:56.044Z",
+  "end": "2026-09-13T09:51:56.044Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": 29878.7,
+  "unit": "MB_per_s"
+ },
+ {
+  "step": "probe-fs-type",
+  "platform": "rickub",
+  "run_id": "19-1-07cf2ad",
+  "start": "2026-09-13T09:51:56.186Z",
+  "end": "2026-09-13T09:51:56.186Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": "overlayfs",
+  "unit": "fstype"
+ },
+ {
+  "step": "probe-fs-free",
+  "platform": "rickub",
+  "run_id": "19-1-07cf2ad",
+  "start": "2026-09-13T09:51:56.220Z",
+  "end": "2026-09-13T09:51:56.220Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": 27411,
+  "unit": "MB"
+ }
+]
