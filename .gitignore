@@ -12,3 +12,6 @@ probe.bin
 
 # macOS noise
 .DS_Store
+
+# chart venv
+.venv/
