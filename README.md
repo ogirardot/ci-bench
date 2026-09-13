@@ -215,3 +215,21 @@ ClickHouse is deliberately absent: a full build needs dozens of cores and
 ClickHouse-scale tier needs a dedicated runner class, not a benchmark step.
 SQLite's amalgamation is the C/C++ stand-in: a real configure+make of one of
 the most deployed codebases on earth, reproducible from a pinned tarball.
+
+## Cache tier (round 3+)
+
+A controlled warm-path arm using each platform's NATIVE cache service exactly
+as users consume it: `actions/cache@v4.2.4` restore/save split actions (the
+v4/node20 line — the action runs inside the guest; v6 requires node24 and
+would measure node absence on some runners, and v4 is the protocol generation
+rickub's cache service implements), identical key (`hashFiles` of the pinned
+Cargo.lock) and paths on both platforms.
+
+Design: the cached build uses an ISOLATED `CARGO_HOME` + target dir, so it
+measures the warm path from cache alone — earlier steps' registry downloads
+cannot leak into it. Metrics per run: `cache-restore-rust` (the cache
+SERVICE's speed, with a hit/miss boolean in the value field),
+`rust-cached-build` (warm build), `cache-save-rust` (upload). The cold arm is
+the same workload without cache, already measured every round. First run
+after a lockfile change is a miss and primes the cache; interleaved rounds
+then measure warm hits.

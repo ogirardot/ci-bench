@@ -125,6 +125,69 @@ jobs:
             bench_skip java-guava "maven not available on runner"
           fi
 
+      # --- cache tier: each platform's NATIVE cache service, as users use it --
+      # actions/cache restore/save split actions @ v4.2.4 — deliberately the
+      # v4/node20 line (the action runs INSIDE the guest; v6 would measure node
+      # absence, not cache). Identical key and paths on both platforms; v4 is
+      # also the exact protocol generation rickub's cache service implements
+      # (verified against the actions/cache@v4 client, web/ci_cache_api.go).
+      # The cached build uses an ISOLATED CARGO_HOME + target dir so it measures
+      # the warm path from cache alone — the earlier steps' registry downloads
+      # cannot leak into it. First run on a lockfile change is a MISS (primes
+      # the cache); the interleaved rounds then measure warm hits. `uses:`
+      # steps cannot be wrapped by bench_step, so restore/save are timed via an
+      # env-carried start stamp + a direct _bench_emit, with the hit flag as a
+      # JSON boolean in the value field.
+
+      - name: stamp cache-restore start
+        run: |
+          source "${GITHUB_WORKSPACE:-$PWD}/scripts/emit_timing.sh"
+          echo "CACHE_RESTORE_T0=$(_bench_now_iso)" >> "$GITHUB_ENV"
+
+      - name: cache restore (cargo)
+        id: cache-restore
+        uses: actions/cache/restore@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        with:
+          path: |
+            workloads/rust-build/.cargo-cached/registry
+            workloads/rust-build/target-cached
+          key: ci-bench-cached-rust-${{ hashFiles('workloads/rust-build/Cargo.lock') }}
+
+      - name: time cache restore
+        run: |
+          set -euo pipefail
+          source "${GITHUB_WORKSPACE:-$PWD}/scripts/emit_timing.sh"
+          if [ "${{ steps.cache-restore.outputs.cache-hit }}" = "true" ]; then hit=true; else hit=false; fi
+          _bench_emit cache-restore-rust ok "$CACHE_RESTORE_T0" "$(_bench_now_iso)" "$hit" "cache_hit"
+
+      - name: rust cached build
+        run: |
+          set -euo pipefail
+          source "${GITHUB_WORKSPACE:-$PWD}/scripts/emit_timing.sh"
+          cd workloads/rust-build
+          bench_step rust-cached-build env \
+            CARGO_HOME="$PWD/.cargo-cached" CARGO_TARGET_DIR="$PWD/target-cached" \
+            cargo build --manifest-path Cargo.toml
+
+      - name: stamp cache-save start
+        run: |
+          source "${GITHUB_WORKSPACE:-$PWD}/scripts/emit_timing.sh"
+          echo "CACHE_SAVE_T0=$(_bench_now_iso)" >> "$GITHUB_ENV"
+
+      - name: cache save (cargo)
+        uses: actions/cache/save@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        with:
+          path: |
+            workloads/rust-build/.cargo-cached/registry
+            workloads/rust-build/target-cached
+          key: ci-bench-cached-rust-${{ hashFiles('workloads/rust-build/Cargo.lock') }}
+
+      - name: time cache save
+        run: |
+          set -euo pipefail
+          source "${GITHUB_WORKSPACE:-$PWD}/scripts/emit_timing.sh"
+          _bench_emit cache-save-rust ok "$CACHE_SAVE_T0" "$(_bench_now_iso)"
+
       - name: probe runner
         run: bash workloads/probe/probe.sh
 
