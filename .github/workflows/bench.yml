@@ -120,7 +120,7 @@ jobs:
           source "${GITHUB_WORKSPACE:-$PWD}/scripts/emit_timing.sh"
           if command -v mvn >/dev/null 2>&1; then
             bench_step java-guava bash -ec \
-              'rm -rf /tmp/real-guava && git clone -q --depth 1 --branch v33.7.1 https://github.com/google/guava /tmp/real-guava && cd /tmp/real-guava && mvn -B -q -DskipTests compile'
+              'rm -rf /tmp/real-guava && git clone -q --depth 1 --branch v33.7.1 https://github.com/google/guava /tmp/real-guava && cd /tmp/real-guava && mvn -B -q -DskipTests -pl guava -am compile'
           else
             bench_skip java-guava "maven not available on runner"
           fi
