@@ -34,7 +34,7 @@ env:
 jobs:
   bench:
     runs-on: large
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
@@ -83,6 +83,55 @@ jobs:
               'docker build -t ci-bench:docker workloads/docker-build && docker run --rm ci-bench:docker'
           else
             bench_skip docker-build "docker not available on runner"
+          fi
+
+      # --- real-world tier: notorious OSS at pinned tags ----------------------
+      # Each step clones/downloads its project INSIDE the timed window (network
+      # is part of a real build) and builds cold — every run is a fresh VM by
+      # construction. Toolchains are guarded: a runner without the tool records
+      # "skipped", never fails the race. ClickHouse itself is deliberately not
+      # here: a full build needs dozens of cores and ~100 GB, which no shared-
+      # runner tier provides — SQLite's amalgamation stands in for C/C++ (see
+      # README).
+
+      - name: rust real build (ripgrep 15.2.0)
+        run: |
+          set -euo pipefail
+          source "${GITHUB_WORKSPACE:-$PWD}/scripts/emit_timing.sh"
+          if command -v cargo >/dev/null 2>&1; then
+            bench_step rust-ripgrep bash -ec \
+              'rm -rf /tmp/real-ripgrep && git clone -q --depth 1 --branch 15.2.0 https://github.com/BurntSushi/ripgrep /tmp/real-ripgrep && cd /tmp/real-ripgrep && cargo build --release'
+          else
+            bench_skip rust-ripgrep "cargo not available on runner"
+          fi
+
+      - name: c/c++ real build (sqlite 3.45.1 amalgamation)
+        run: |
+          set -euo pipefail
+          source "${GITHUB_WORKSPACE:-$PWD}/scripts/emit_timing.sh"
+          bench_step cpp-sqlite bash -ec \
+            'rm -rf /tmp/real-sqlite && mkdir -p /tmp/real-sqlite && cd /tmp/real-sqlite && curl -fsSL https://sqlite.org/2024/sqlite-autoconf-3450100.tar.gz | tar xz --strip-components=1 && ./configure --disable-tcl && make -j"$(nproc)"'
+
+      - name: node real build (typescript v5.9.3)
+        run: |
+          set -euo pipefail
+          source "${GITHUB_WORKSPACE:-$PWD}/scripts/emit_timing.sh"
+          if command -v node >/dev/null 2>&1; then
+            bench_step node-typescript bash -ec \
+              'rm -rf /tmp/real-ts && git clone -q --depth 1 --branch v5.9.3 https://github.com/microsoft/TypeScript /tmp/real-ts && cd /tmp/real-ts && npm ci --no-audit --no-fund && npm run build'
+          else
+            bench_skip node-typescript "node not available on runner"
+          fi
+
+      - name: java real build (guava v33.7.1)
+        run: |
+          set -euo pipefail
+          source "${GITHUB_WORKSPACE:-$PWD}/scripts/emit_timing.sh"
+          if command -v mvn >/dev/null 2>&1; then
+            bench_step java-guava bash -ec \
+              'rm -rf /tmp/real-guava && git clone -q --depth 1 --branch v33.7.1 https://github.com/google/guava /tmp/real-guava && cd /tmp/real-guava && mvn -B -q -DskipTests compile'
+          else
+            bench_skip java-guava "maven not available on runner"
           fi
 
       - name: probe runner
