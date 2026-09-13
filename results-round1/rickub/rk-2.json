@@ -1,0 +1,102 @@
+[
+ {
+  "step": "job-start",
+  "platform": "rickub",
+  "run_id": "2-1-1914eed",
+  "start": "2026-09-13T08:11:52.749Z",
+  "end": "2026-09-13T08:11:52.749Z",
+  "status": "ok",
+  "duration_ms": 0
+ },
+ {
+  "step": "rust-cold-build",
+  "platform": "rickub",
+  "run_id": "2-1-1914eed",
+  "start": "2026-09-13T08:11:52.789Z",
+  "end": "2026-09-13T08:12:00.324Z",
+  "status": "ok",
+  "duration_ms": 7535
+ },
+ {
+  "step": "rust-warm-build",
+  "platform": "rickub",
+  "run_id": "2-1-1914eed",
+  "start": "2026-09-13T08:12:00.350Z",
+  "end": "2026-09-13T08:12:00.372Z",
+  "status": "ok",
+  "duration_ms": 22
+ },
+ {
+  "step": "rust-test",
+  "platform": "rickub",
+  "run_id": "2-1-1914eed",
+  "start": "2026-09-13T08:12:00.397Z",
+  "end": "2026-09-13T08:12:00.775Z",
+  "status": "ok",
+  "duration_ms": 378
+ },
+ {
+  "step": "docker-build",
+  "platform": "rickub",
+  "run_id": "2-1-1914eed",
+  "start": "2026-09-13T08:12:00.802Z",
+  "end": "2026-09-13T08:12:03.982Z",
+  "status": "ok",
+  "duration_ms": 3180
+ },
+ {
+  "step": "probe-cpu",
+  "platform": "rickub",
+  "run_id": "2-1-1914eed",
+  "start": "2026-09-13T08:12:05.719Z",
+  "end": "2026-09-13T08:12:05.719Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": 595.83,
+  "unit": "kops_per_s"
+ },
+ {
+  "step": "probe-write",
+  "platform": "rickub",
+  "run_id": "2-1-1914eed",
+  "start": "2026-09-13T08:12:06.356Z",
+  "end": "2026-09-13T08:12:06.356Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": 3600.6,
+  "unit": "MB_per_s"
+ },
+ {
+  "step": "probe-read",
+  "platform": "rickub",
+  "run_id": "2-1-1914eed",
+  "start": "2026-09-13T08:12:06.604Z",
+  "end": "2026-09-13T08:12:06.604Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": 29300.7,
+  "unit": "MB_per_s"
+ },
+ {
+  "step": "probe-fs-type",
+  "platform": "rickub",
+  "run_id": "2-1-1914eed",
+  "start": "2026-09-13T08:12:06.729Z",
+  "end": "2026-09-13T08:12:06.729Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": "overlayfs",
+  "unit": "fstype"
+ },
+ {
+  "step": "probe-fs-free",
+  "platform": "rickub",
+  "run_id": "2-1-1914eed",
+  "start": "2026-09-13T08:12:06.756Z",
+  "end": "2026-09-13T08:12:06.756Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": 29389,
+  "unit": "MB"
+ }
+]

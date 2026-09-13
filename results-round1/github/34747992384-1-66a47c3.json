@@ -1,0 +1,102 @@
+[
+ {
+  "step": "job-start",
+  "platform": "github",
+  "run_id": "34747992384-1-66a47c3",
+  "start": "2026-09-13T08:33:44.715Z",
+  "end": "2026-09-13T08:33:44.715Z",
+  "status": "ok",
+  "duration_ms": 0
+ },
+ {
+  "step": "rust-cold-build",
+  "platform": "github",
+  "run_id": "34747992384-1-66a47c3",
+  "start": "2026-09-13T08:33:44.792Z",
+  "end": "2026-09-13T08:33:57.800Z",
+  "status": "ok",
+  "duration_ms": 13008
+ },
+ {
+  "step": "rust-warm-build",
+  "platform": "github",
+  "run_id": "34747992384-1-66a47c3",
+  "start": "2026-09-13T08:33:57.877Z",
+  "end": "2026-09-13T08:33:57.922Z",
+  "status": "ok",
+  "duration_ms": 45
+ },
+ {
+  "step": "rust-test",
+  "platform": "github",
+  "run_id": "34747992384-1-66a47c3",
+  "start": "2026-09-13T08:33:57.998Z",
+  "end": "2026-09-13T08:33:59.509Z",
+  "status": "ok",
+  "duration_ms": 1511
+ },
+ {
+  "step": "docker-build",
+  "platform": "github",
+  "run_id": "34747992384-1-66a47c3",
+  "start": "2026-09-13T08:33:59.585Z",
+  "end": "2026-09-13T08:34:06.443Z",
+  "status": "ok",
+  "duration_ms": 6858
+ },
+ {
+  "step": "probe-cpu",
+  "platform": "github",
+  "run_id": "34747992384-1-66a47c3",
+  "start": "2026-09-13T08:34:11.057Z",
+  "end": "2026-09-13T08:34:11.057Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": 222.21,
+  "unit": "kops_per_s"
+ },
+ {
+  "step": "probe-write",
+  "platform": "github",
+  "run_id": "34747992384-1-66a47c3",
+  "start": "2026-09-13T08:34:11.693Z",
+  "end": "2026-09-13T08:34:11.693Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": 3857.6,
+  "unit": "MB_per_s"
+ },
+ {
+  "step": "probe-read",
+  "platform": "github",
+  "run_id": "34747992384-1-66a47c3",
+  "start": "2026-09-13T08:34:16.566Z",
+  "end": "2026-09-13T08:34:16.566Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": 18614.4,
+  "unit": "MB_per_s"
+ },
+ {
+  "step": "probe-fs-type",
+  "platform": "github",
+  "run_id": "34747992384-1-66a47c3",
+  "start": "2026-09-13T08:34:16.721Z",
+  "end": "2026-09-13T08:34:16.721Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": "ext2/ext3",
+  "unit": "fstype"
+ },
+ {
+  "step": "probe-fs-free",
+  "platform": "github",
+  "run_id": "34747992384-1-66a47c3",
+  "start": "2026-09-13T08:34:16.797Z",
+  "end": "2026-09-13T08:34:16.797Z",
+  "status": "ok",
+  "duration_ms": 0,
+  "value": 87504,
+  "unit": "MB"
+ }
+]
